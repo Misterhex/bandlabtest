@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "serverless-offline": "^3.3.1"
+    "aws-sdk": "^2.6.15",
+    "serverless-offline": "^3.3.1",
+    "uuid": "^2.0.3"
   }
 }

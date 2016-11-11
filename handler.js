@@ -1,6 +1,11 @@
 'use strict';
 
-var http = require('http');
+const http = require('http');
+const fs = require('fs');
+const uuid = require('uuid');
+const AWS = require('aws-sdk');
+const s3 = new AWS.S3();
+const bucketName = 'comments.inbox';
 
 module.exports.getComments = (event, context, callback) => {
 
@@ -10,7 +15,6 @@ module.exports.getComments = (event, context, callback) => {
     host: 'jsonplaceholder.typicode.com',
     path: '/comments/' + event.path.id,
   }, function (response) {
-
     console.log(response.statusCode);
 
     var body = '';
@@ -20,12 +24,31 @@ module.exports.getComments = (event, context, callback) => {
     });
 
     response.on('end', function () {
-      var response = {
-        statusCode: 200,
-        body: body
-      };
-      
-      callback(null, body);
+
+      const uniqueId = uuid.v4();
+      const fileName = uniqueId + '.json';
+
+      fs.writeFile('/tmp/' + fileName, body, function (err) {
+        callback(null, { data: body, err: err });
+      });
+
+      // s3.putObject({
+      //   Bucket: bucketName,
+      //   Key: + '.json',
+      //   Body: body,
+      // }, function (err, data) {
+      //   callback(null, { data: data, err: err });
+      // });
+
+      // s3.headBucket({
+      //   Bucket: bucketName,
+      // }, function (err, data) {
+      //   callback(null, { data: data, err: err });
+      // });
+
+      // s3.listBuckets(function (err, data) {
+      //   callback(null, { data: data, err: err });
+      // });
 
     });
   });
