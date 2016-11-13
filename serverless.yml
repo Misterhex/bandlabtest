@@ -41,13 +41,12 @@ functions:
             parameters:
               paths:
                 id: true
-
   commentParser:
-    handler: handler.commentParser
-    events:
-      - s3:
-        bucket: ${self:custom.commentBucket}
-        event: s3:ObjectCreated:*
+      handler: handler.commentParser
+      events:
+        - s3:
+            bucket: ${self:custom.commentBucket}
+            event: s3:ObjectCreated:*
 
 resources:
   Resources:
