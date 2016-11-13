@@ -10,6 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "aws-sdk": "^2.6.15",
+    "request": "^2.78.0",
     "serverless-offline": "^3.3.1",
     "uuid": "^2.0.3"
   }
