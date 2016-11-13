@@ -7,7 +7,7 @@ const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 const putBucketName = 'comments-inbox';
 
-module.exports.getComments = (event, context, callback) => {
+module.exports.getComment = (event, context, callback) => {
 
   http.get({
     host: 'jsonplaceholder.typicode.com',
@@ -46,6 +46,13 @@ module.exports.getComments = (event, context, callback) => {
     });
   });
 };
+
+module.exports.commentParser = (event, context, callback) => {
+  console.log(event);
+  console.log("######");
+  console.log(context);
+  callback(null, event);
+}
 
 
 

@@ -17,28 +17,20 @@ service: bandlabtest
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
 
+custom:
+  commentBucket: comments-inbox
+
 provider:
   name: aws
   runtime: nodejs4.3
   iamRoleStatements:
     $ref: ./iamRoleStatements.json
 
-# you can overwrite defaults here
 stage: dev
 
-# you can add packaging information here
-#package:
-#  exclude:
-#    - exclude-me.js
-#  artifact: my-service-code.zip
-
 functions:
-  getComments:
-    handler: handler.getComments
-
-#    The following are a few example events you can configure
-#    NOTE: Please make sure to change your handler code to work with those events
-#    Check the event documentation for details
+  getComment:
+    handler: handler.getComment
     events:
       - http:
           path: comments/{id}
@@ -48,23 +40,20 @@ functions:
             parameters:
               paths:
                 id: true
+                
+  commentParser:
+    handler: handler.commentParser
+    events:
+      - s3:
+        bucket: ${self:custom.commentBucket}
+        event: s3:ObjectCreated:*
 
-#      - s3: ${env:BUCKET}
-#      - schedule: rate(10 minutes)
-#      - sns: greeter-topic
-#      - stream: arn:aws:dynamodb:region:XXXXXX:table/foo/stream/1970-01-01T00:00:00.000
-
-# you can add CloudFormation resource templates here
 resources:
   Resources:
     InboxS3Bucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: comments-inbox
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+        BucketName: ${self:custom.commentBucket}
 
 plugins:
   - serverless-offline
