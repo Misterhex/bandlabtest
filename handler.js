@@ -26,19 +26,11 @@ module.exports.getComment = (event, context, callback) => {
       const fileName = uniqueId + '.json';
 
       fs.writeFile('/tmp/' + fileName, body, function (err) {
-
-        console.log("write to lamdba locally. err : " + err);
-
-        console.log("putting objects into bucket...");
-
         s3.putObject({
           Bucket: putBucketName,
           Key: fileName,
           Body: body,
         }, function (err, data) {
-          console.log("putting objects into bucket callback");
-          console.log(err);
-          console.log(data);
           callback(null, { data: data, err: err });
         });
 
@@ -48,16 +40,18 @@ module.exports.getComment = (event, context, callback) => {
 };
 
 module.exports.commentParser = (event, context, callback) => {
-  console.log(event);
 
   var bucketName = event.Records[0].s3.bucket.name;
   var objectKey = event.Records[0].s3.object.key;
 
-  console.log("##########");
-  console.log("bucketName : " + bucketName);
-  console.log("objectKey : " + objectKey);
+  s3.getObject({
+    Bucket: bucketName,
+    Key: objectKey
+  }, function (err, data) {
+    console.log(JSON.parse(data.Body.toString()));
+    callback(null);
+  });
 
-  callback(null, objectKey);
 }
 
 
