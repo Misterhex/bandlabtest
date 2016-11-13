@@ -23,6 +23,7 @@ custom:
 provider:
   name: aws
   runtime: nodejs4.3
+  cfLogs: true
   iamRoleStatements:
     $ref: ./iamRoleStatements.json
 
@@ -40,7 +41,7 @@ functions:
             parameters:
               paths:
                 id: true
-                
+
   commentParser:
     handler: handler.commentParser
     events:
