@@ -10,6 +10,7 @@ test for bandlab
 git clone https://github.com/Misterhex/bandlabtest/
 cd bandlabtest 
 serverless deploy
-curl https://xxxxxx.execute-api.us-east-1.amazonaws.com/dev/comments/10 | jq  /// curl the single endpoint output from the stdout.
+curl https://xxx.execute-api.us-east-1.amazonaws.com/dev/comments/10 | jq  /// replace xxx with the deployed api gateway from stdout when running 'server deploy'
+go to cloudwatch and verify output.
 ```
 
