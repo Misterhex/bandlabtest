@@ -49,9 +49,15 @@ module.exports.getComment = (event, context, callback) => {
 
 module.exports.commentParser = (event, context, callback) => {
   console.log(event);
-  console.log("######");
-  console.log(context);
-  callback(null, event);
+
+  var bucketName = event.Records[0].s3.bucket.name;
+  var objectKey = event.Records[0].s3.object.key;
+
+  console.log("##########");
+  console.log("bucketName : " + bucketName);
+  console.log("objectKey : " + objectKey);
+
+  callback(null, objectKey);
 }
 
 

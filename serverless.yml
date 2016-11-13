@@ -48,12 +48,5 @@ functions:
             bucket: ${self:custom.commentBucket}
             event: s3:ObjectCreated:*
 
-resources:
-  Resources:
-    InboxS3Bucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:custom.commentBucket}
-
 plugins:
   - serverless-offline

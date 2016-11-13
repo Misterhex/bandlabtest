@@ -1,0 +1,14 @@
+{
+    "Records": [
+        {
+            "s3": {
+                "bucket": {
+                    "name": "comments-inbox"
+                },
+                "object": {
+                    "key": "86895ce8-c7c1-4dfd-a797-0575229d523b.json"
+                }
+            }
+        }
+    ]
+}
