@@ -4,6 +4,7 @@ test for bandlab
 ## Requirement
 - [serverless framework](https://serverless.com)
 - configure aws credentials
+- npm
 
 ## Verifying test
 ```
